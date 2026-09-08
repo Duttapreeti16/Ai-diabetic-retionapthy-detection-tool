@@ -151,6 +151,13 @@ a{color:inherit;}
   min-width:0;
   display:flex;
   flex-direction:column;
+  transition: margin-left .25s ease;
+}
+.main-col.expanded{
+  margin-left:0;
+}
+.sidebar.collapsed{
+  transform: translateX(-100%);
 }
 
 /* ---- Topbar ---- */
@@ -162,7 +169,7 @@ a{color:inherit;}
   padding:0 26px;gap:16px;
   position:sticky;top:0;z-index:30;
 }
-.topbar-menu-btn{display:none;}
+.topbar-menu-btn{display:flex;}
 .topbar-title{font-size:15px;font-weight:700;}
 .topbar-spacer{flex:1;}
 .conn-pill{
@@ -920,12 +927,19 @@ function navigate(view){
   render();
 }
 function toggleSidebar(){
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('mobileBackdrop').classList.toggle('show');
+  if(window.innerWidth <= 980) {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('mobileBackdrop').classList.toggle('show');
+  } else {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+    document.querySelector('.main-col').classList.toggle('expanded');
+  }
 }
 function closeSidebar(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('mobileBackdrop').classList.remove('show');
+  if(window.innerWidth <= 980) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('mobileBackdrop').classList.remove('show');
+  }
 }
 
 function toggleOffline(){
